@@ -7,6 +7,12 @@ RSpec.describe 'タスクモデル機能', type: :model do
         expect(task).not_to be_valid
       end
     end
+    context 'タスクの詳細が空の場合' do
+      it 'バリデーションにひっかかる' do
+        task = Task.new(name: '失敗テスト', note: '')
+        expect(task).not_to be_valid
+      end
+    end
     context 'タスクの詳細が文字数超過の場合' do
       it 'バリデーションにひっかかる' do
         task = Task.new(name: '失敗テスト', note: 'a' * 1025)
