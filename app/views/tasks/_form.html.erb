@@ -17,13 +17,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :priolity %>
-    <%= form.select :priolity, {low:'low', middle:'middle', high:'high', top:'top'} %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, {waiting:'waiting', working:'working', completed:'completed'} %>
+    <%= form.label :優先度 %>
+    <%= form.select :priolity, { 低: 'low', 中: 'middle', 高: 'high', 最優先: 'top'} %>
   </div>
 
   <div class="field">

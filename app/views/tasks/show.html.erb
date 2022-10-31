@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
-
+<div>タスク名:<%= @task.name %></div>
+<div>
+  <span>優先度:<%= @task.priolity_i18n %></span>
+  <span>状態：<%= @task.status_i18n %></span>
+</div>
+<div>備考:<%= @task.note %></div>
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
