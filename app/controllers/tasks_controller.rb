@@ -43,8 +43,10 @@ class TasksController < ApplicationController
     redirect_to tasks_url, notice: "Task was successfully destroyed." 
   end
 
+
   private
+
   def task_params
-    params.fetch(:task, {})
+    params.require(:task).permit(:name, :priolity, :status, :note)
   end
 end
