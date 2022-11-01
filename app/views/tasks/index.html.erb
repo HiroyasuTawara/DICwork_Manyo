@@ -14,7 +14,7 @@
   </tr>
   <tbody>
     <% @tasks.each do |task| %>
-      <tr>
+      <tr class="task_row">
         <td><%= task.name.truncate(14) %></td>
         <td><%= task.priolity_i18n %></td>
         <td><%= task.status_i18n %></td>

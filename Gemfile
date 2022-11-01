@@ -50,3 +50,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails-i18n'
 gem 'enum_help'
+
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'
