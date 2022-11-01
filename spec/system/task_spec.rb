@@ -1,7 +1,11 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   # テストで使用するためのタスクを作成
-  let!(:task) { FactoryBot.create(:task, name: 'task') }
+  before do
+    FactoryBot.create(:task) 
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
+  end
 
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
@@ -21,17 +25,36 @@ RSpec.describe 'タスク管理機能', type: :system do
       visit tasks_path
     end
     context '一覧画面に遷移した場合' do
-      it '作成済みのタスク一覧が表示される' do
-        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
-        # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
-        expect(page).to have_content 'task'
-        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+      it '作成済みのタスク一覧が作成日時降順で表示される' do
+        task_list = all('.task_row')
+        expect(task_list[0].text).to have_content 'name_3'
+        expect(task_list[1].text).to have_content 'name_2'
+        expect(task_list[2].text).to have_content 'name'
       end
     end
-    context 'タスクが作成日時の降順に並んでいる場合' do
-      it '新しいタスクが一番上に表示される' do
+    context '新規タスクを作成した場合' do
+      it '新しいタスクが最初に表示される' do
+        FactoryBot.create(:fourth_task)
+        visit tasks_path
         task_list = all('.task_row')
-        expect(task_list[0]).to have_content 'task'
+        expect(task_list[0].text).to have_content 'name_4'
+      end
+    end
+    end
+  end
+
+  describe 'ソート機能' do
+    before do
+      FactoryBot.create(:task) 
+      FactoryBot.create(:second_task)
+      FactoryBot.create(:third_task)
+    end
+    context '「終了期限でソートする」リンクを踏んだ場合' do
+      it '終了期限降順でタスク一覧が表示される' do
+        visit tasks_path
+        click_link("終了期限でソート")
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content 'name_3'
       end
     end
   end
@@ -44,6 +67,7 @@ RSpec.describe 'タスク管理機能', type: :system do
           expect(page).to have_content 'note'
         end
       end
-  end
+    
+  
   
 end

@@ -19,9 +19,9 @@ RSpec.describe 'タスクモデル機能', type: :model do
         expect(task).not_to be_valid
       end
     end
-    context 'タスクのタイトル記載され、詳細が1024文字以内の場合' do
+    context 'タスクのタイトルが記載され、詳細が1024文字以内の場合' do
       it 'バリデーションが通る' do
-        task = Task.new(name: '成功テスト', note: 'a' * 1024)
+        task = Task.new(name: '成功テスト', note: 'a' * 1024, expired_at:'2032/11/01' )
         expect(task).to be_valid
       end
     end

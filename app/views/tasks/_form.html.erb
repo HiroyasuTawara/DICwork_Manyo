@@ -26,6 +26,11 @@
     <%= form.text_area :note %>
   </div>
 
+  <div class="field">
+    <%= form.label :expired_at, "〆切" %>
+    <%= form.date_select :expired_at %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
