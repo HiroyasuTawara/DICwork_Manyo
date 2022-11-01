@@ -22,6 +22,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'rexml'
 
+gem 'jquery-rails'
+
 group :development, :test do
   
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -50,3 +52,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails-i18n'
 gem 'enum_help'
+
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'

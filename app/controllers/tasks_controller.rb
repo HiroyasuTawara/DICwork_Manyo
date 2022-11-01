@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: "DESC")
   end
 
 
@@ -20,19 +20,23 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to task_url(@task), notice: "タスクを作成しました。" 
+      redirect_to task_url(@task), notice: "タスクを作成しました。"
     else
-      render :new, status: :unprocessable_entity 
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     @task = Task.find(params[:id])
-    if @task.update(task_params)
-      redirect_to task_url(@task), notice: "タスクを更新しました。" 
-    else
-      render :edit, status: :unprocessable_entity 
+    respond_to do |format|
+      if @task.update(task_params)
+        format.html {redirect_to tasks_path, notice: "タスクを更新しました。"}
+        format.js
+      else
+        format.html {render :edit, status: :unprocessable_entity}
+        format.js { render :errors }
+      end
     end
   end
 
