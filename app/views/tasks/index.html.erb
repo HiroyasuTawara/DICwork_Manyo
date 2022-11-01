@@ -11,13 +11,22 @@
     <th>タスク名</th>
     <th>優先度</th>
     <th>状態</th>
+    <th>ステータス変更</th>
   </tr>
   <tbody>
     <% @tasks.each do |task| %>
       <tr class="task_row">
         <td><%= task.name.truncate(14) %></td>
-        <td><%= task.priolity_i18n %></td>
-        <td><%= task.status_i18n %></td>
+        <td class="now_priolity"><%= task.priolity_i18n %></td>
+        <td class="now_status"><%= task.status_i18n %></td>
+        <td>
+          <%= form_with(model: task, class: 'js-form', local: true) do |f| %>
+            ...
+            <%= f.select :priolity, { 低: 'low', 中: 'middle', 高: 'high', 最優先: 'top'} %>
+            <%= f.select :status, { 未着手: 'waiting', 着手: 'working', 完了: 'completed'}%>
+            <%= f.submit "変更" %>
+          <% end %>
+        </td>
         <td class="date"><%= task.created_at.strftime("%y-%m-%d %H:%M") %> 作成</td> 
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
