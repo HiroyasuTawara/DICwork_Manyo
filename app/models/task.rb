@@ -18,9 +18,9 @@ class Task < ApplicationRecord
 
   scope :search_status, ->(status) {
     return if status.blank?
-    WHERE(status: status) }
+    where(status: status) }
   scope :search_name, ->(name) {
     return if name.blank?
-    WHERE('name LIKE ?',"%#{name}%") }
+    where('name LIKE ?',"%#{name}%") }
 
 end

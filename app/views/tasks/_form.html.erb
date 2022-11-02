@@ -22,6 +22,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :status, "ステータス" %>
+    <%= form.select :status, { 未着手: '未着手', 着手: '着手', 完了: '完了'} %>
+  </div>
+
+  <div class="field">
     <%= form.label :note, "メモ" %>
     <%= form.text_area :note %>
   </div>
