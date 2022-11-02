@@ -49,10 +49,10 @@ RSpec.describe 'タスク管理機能', type: :system do
       FactoryBot.create(:second_task)
       FactoryBot.create(:third_task)
     end
-    context '「終了期限でソートする」リンクを踏んだ場合' do
+    context '「終了期限」リンクを踏んだ場合' do
       it '終了期限降順でタスク一覧が表示される' do
         visit tasks_path
-        click_link("終了期限でソート")
+        click_link("終了期限")
         task_list = all('.task_row')
         expect(task_list[0]).to have_content 'name_3'
       end

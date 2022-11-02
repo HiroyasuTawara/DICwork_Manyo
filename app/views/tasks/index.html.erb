@@ -1,4 +1,11 @@
 <h1>Tasks</h1>
+  <%= form_with url: tasks_path(search:"true"), method: :get, scope: :search, local: true do |f| %>
+    <%= f.select :status, Task.statuses.keys, include_blank: "" %>
+    <%= f.text_field :name, placeholder: "投稿を検索する" %>
+    <%= f.submit t('.search'), id: 'search_task' %>
+  <% end %>
+
+
 
 <table>
   <thead>
@@ -12,26 +19,26 @@
     <th>優先度</th>
     <th>状態</th>
     <th>ステータス変更</th>
-    <th><%= link_to "終了期限でソート",tasks_path(sort_expired:"true") %></th>
+    <th><%= link_to t('.exipired_at'), sort_expired_at: true %></th>
     <th colspan="3"></th>
-    <th><%= link_to "作成日でソート",tasks_path(sort_created:"true") %></th>
+    <th><%= link_to t('.priorit'), sort_created: true %></th>
   </tr>
   <tbody>
     <% @tasks.each do |task| %>
       <tr class="task_row">
         <td><%= task.name.truncate(14) %></td>
-        <td class="now_priolity"><%= task.priolity_i18n %></td>
-        <td class="now_status"><%= task.status_i18n %></td>
+        <td class="now_priolity"><%= task.priolity %></td>
+        <td class="now_status"><%= task.status %></td>
         <td>
           <%= form_with(model: task, class: 'js-form', local: true) do |f| %>
             ...
-            <%= f.select :priolity, { 低: 'low', 中: 'middle', 高: 'high', 最優先: 'top'} %>
-            <%= f.select :status, { 未着手: 'waiting', 着手: 'working', 完了: 'completed'}%>
+            <%= f.select :priolity, { 低: '低', 中: '中', 高: '高', 最優先: '最優先'} %>
+            <%= f.select :status, { 未着手: '未着手', 着手: '着手', 完了: '完了'}%>
             <%= f.submit "変更" %>
           <% end %>
         </td>
 
-        <td class="date">《<%= task.expired_at.strftime("%y年%m月%d日") %> 〆切》</td> 
+        <td class="date">《<%= task.expired_at.strftime("%y年%m月%d日") %> 〆》</td> 
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: '削除しますか?' } %></td>
