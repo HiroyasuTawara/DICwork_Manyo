@@ -4,8 +4,8 @@ class TasksController < ApplicationController
     
     if params[:sort_expired_at]
       @tasks = @tasks.sort_expired_at
-    elsif params[:sort_priority]
-      @tasks = @tasks.sort_priority
+    elsif params[:sort_priolity]
+      @tasks = @tasks.sort_priolity
     else
       @tasks = @tasks.sort_created_at
       

@@ -12,7 +12,7 @@ class Task < ApplicationRecord
   end
 
   scope :sort_expired_at, -> { order("expired_at ASC") }
-  scope :sort_priority, -> { order("priority DESC") }
+  scope :sort_priolity, -> { order("priolity DESC") }
   scope :sort_created_at, -> { order("created_at DESC") }
 
 

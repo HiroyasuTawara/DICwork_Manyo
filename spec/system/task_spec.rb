@@ -54,6 +54,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0]).to have_content 'name_2_cat'
       end
     end
+    context '「優先度」リンクをクリックした場合' do
+      it '優先度降順でタスク一覧が表示される' do
+        visit tasks_path
+        rescue Selenium::WebDriver::Error::NoAlertPresentError
+        click_link("優先度")
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content 'name_2_cat'
+      end
+    end
   end
 
   describe '詳細表示機能' do
