@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    :set_user
+    @user = User.find(params[:id])
   end
 
   def new
@@ -13,20 +13,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    :set_user
+    @user = User.find(params[:id])
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_url(@user), notice: "User was successfully created."
+      redirect_to user_path(@user.id), notice: "User was successfully created."
     else
       render :new, status: :unprocessable_entity 
     end
   end
 
   def update
-    :set_user
+    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to user_url(@user), notice: "User was successfully updated."
     else
@@ -35,13 +35,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    :set_user
+    @user = User.find(params[:id])
     @user.destroy
     redirect_to users_url, notice: "User was successfully destroyed." 
   end
 
   private
   def user_params
-    params.fetch(:user, {})
+    params.require(:user).permit(:name, :email, :password, :password_confirm)
   end
 end
