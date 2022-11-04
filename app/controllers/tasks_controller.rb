@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :ensure_user, only: %i[ edit update destroy ]
   def index
     @tasks = Task.all
     if params[:sort_expired_at]
@@ -65,6 +66,10 @@ class TasksController < ApplicationController
 
 
   private
+  def ensure_user
+    @tasks = current_user.tasks
+    @task = @tasks.find_by(id: params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:name, :priolity, :status, :note, :expired_at)
