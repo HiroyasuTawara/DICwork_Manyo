@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    name {"name"}
+    name {"name_chiken"}
     priolity {1}
     status {1}
     note {"note"}
@@ -8,7 +8,7 @@ FactoryBot.define do
     expired_at{ '2032/11/01' }
   end
   factory :second_task, class: Task do
-    name {"name_2"}
+    name {"name_2_cat"}
     priolity {2}
     status {0}
     note {"note_2"}
@@ -16,7 +16,7 @@ FactoryBot.define do
     expired_at{ '2032/10/31' }
   end
   factory :third_task, class: Task do
-    name {"name_3"}
+    name {"name_3_dog"}
     priolity {0}
     status {0}
     note {"note_3"}
@@ -24,7 +24,7 @@ FactoryBot.define do
     expired_at{ '2032/11/02' }
   end
   factory :fourth_task, class: Task do
-    name {"name_4"}
+    name {"name_4_donkey"}
     priolity {3}
     status {2}
     note {"note_4"}
