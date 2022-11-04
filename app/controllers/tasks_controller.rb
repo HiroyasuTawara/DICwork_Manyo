@@ -1,15 +1,12 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    
     if params[:sort_expired_at]
       @tasks = @tasks.sort_expired_at
     elsif params[:sort_priolity]
       @tasks = @tasks.sort_priolity
     else
       @tasks = @tasks.sort_created_at
-      
-      
     end
   
     if params[:search].present?
@@ -19,6 +16,7 @@ class TasksController < ApplicationController
         #.search_label(params[:search][:label_id])
     end
 
+    @tasks = @tasks.page(params[:page]).sort_created_at
   end
 
 
