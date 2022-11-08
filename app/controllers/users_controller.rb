@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :login_required, only:[:new, :create]
 
   def index
     @users = User.all
@@ -17,11 +18,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params)  
     if @user.save
-      redirect_to user_path(@user.id), notice: "User was successfully created."
+      redirect_to user_path(@user.id), notice: "User was successfully created." 
     else
-      render :new, status: :unprocessable_entity 
+      render :new, status: :unprocessable_entity
     end
   end
 
