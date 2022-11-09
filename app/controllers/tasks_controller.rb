@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :ensure_user, only: %i[ edit update destroy ]
   def index
-    @tasks = Task.all
+    @tasks = @current_user.tasks
     if params[:sort_expired_at]
       @tasks = @tasks.sort_expired_at
     elsif params[:sort_priolity]
@@ -36,6 +36,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to task_url(@task), notice: "タスクを作成しました。"
     else
