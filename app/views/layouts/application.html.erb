@@ -17,6 +17,9 @@
       <%= link_to '新規ユーザー作成', new_user_path, class:"btn-primary" %>
       <%= link_to 'ログイン', new_session_path, class:"btn-primary" %>
     <% end %>
+    <% if current_user.admin? && !(current_user == @user) %>
+      <%= link_to "ユーザー一覧", users_path %>
+    <% end %>
     <p id="notice"><%= notice %></p>
     <%= yield %>
   </body>
