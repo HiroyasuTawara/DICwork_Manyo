@@ -1,18 +1,19 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only:[:new, :create]
 
-  def index
-    if current_user.admin?
-      @users = User.all
-    end
-  end
 
   def show
     @user = User.find(params[:id])
+    if @user != current_user
+      redirect_to root_path
+    end
   end
 
   def new
     @user = User.new
+    if logged_in?
+      redirect_to root_path
+    end
   end
 
   def edit
@@ -40,11 +41,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    unless @user.admin
-      @user.destroy
-    else
-      redirect_to users_url, notice: "管理者アカウントは削除できません." 
-    end
+    @user.destroy
     redirect_to root_path, notice: "アカウントを削除しました。" 
   end
 

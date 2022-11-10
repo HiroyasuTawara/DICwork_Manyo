@@ -16,7 +16,7 @@
       <span><%= link_to 'マイページ' ,user_path(current_user.id), class:"btn-primary" %></span>
       <%= link_to 'ログアウト' ,session_path(current_user.id), method: :delete, class:"btn-primary" %>
       <% if current_user.admin? && !(current_user == @user) %> 
-        <%= link_to "ユーザー一覧", users_path %>
+        <%= link_to "ユーザー一覧", admin_users_path %>
       <% end %>
     <% else %>
       <%= link_to '新規ユーザー作成', new_user_path, class:"btn-primary" %>
