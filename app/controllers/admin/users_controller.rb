@@ -1,6 +1,8 @@
 class Admin::UsersController < ApplicationController
   before_action :disallow_non_administrators
+  before_action :disallow_admins_absence, only: [:update, :destroy]
   skip_before_action :login_required, only: [:new, :create]
+
 
   def index
     @users = User.all
@@ -50,6 +52,13 @@ class Admin::UsersController < ApplicationController
   private
   def disallow_non_administrators
     redirect_to tasks_path, notice: "このアカウントは管理者専用ページにアクセスできません。" unless current_user.admin == true
+  end
+
+  def disallow_admins_absence
+    @user = User.find(params[:id])
+    if User.where(admin: 'true').count == 1 && @user.admin == true
+      redirect_to admin_users_path, notice: "管理ユーザーが不在となるため、処理をキャンセルしました。"
+    end
   end
 
   def user_params
