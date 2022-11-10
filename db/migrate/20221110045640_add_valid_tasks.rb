@@ -1,6 +1,6 @@
 class AddValidTasks < ActiveRecord::Migration[6.1]
   def self.up
-    change_column_null :tasks, :user_id, false, 20
+    change_column_null :tasks, :user_id, false, 1
   end
 
   def self.down
