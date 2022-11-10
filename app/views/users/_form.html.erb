@@ -1,0 +1,49 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= form.label :name, class:"col-sm-6 col-form-label" do%>ユーザーネーム<% end %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :email, class:"col-sm-6 col-form-label" do%>メールアドレス<% end %>
+    <div class="col-sm-10">
+      <%= form.text_field :email, class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :password, class:"col-sm-6 col-form-label" do%>パスワード<% end %>
+    <div class="col-sm-10">
+      <%= form.text_field :password, class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :password_confirmation, class:"col-sm-6 col-form-label" do %>パスワード(確認)<% end %>
+    <div class="col-sm-10">
+      <%= form.text_field :password_confirmation, class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class:"btn btn-primary mt-4" %>
+  </div>
+
+
+</div>
+
+<% end %>

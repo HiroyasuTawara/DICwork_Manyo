@@ -6,6 +6,7 @@ FactoryBot.define do
     note {"note"}
     created_at { '2032/10/01' }
     expired_at{ '2032/11/01' }
+    user_id {1}
   end
   factory :second_task, class: Task do
     name {"name_2_cat"}
@@ -14,6 +15,7 @@ FactoryBot.define do
     note {"note_2"}
     created_at { '2032/10/02' }
     expired_at{ '2032/10/31' }
+    user_id {1}
   end
   factory :third_task, class: Task do
     name {"name_3_dog"}
@@ -22,6 +24,7 @@ FactoryBot.define do
     note {"note_3"}
     created_at { '2032/10/03' }
     expired_at{ '2032/11/02' }
+    user_id {1}
   end
   factory :fourth_task, class: Task do
     name {"name_4_donkey"}
@@ -30,5 +33,6 @@ FactoryBot.define do
     note {"note_4"}
     created_at { '2032/10/04' }
     expired_at{ '2032/11/03' }
+    user_id {1}
   end
 end
