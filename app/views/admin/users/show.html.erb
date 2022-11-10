@@ -1,0 +1,41 @@
+<h2>User page/admin</h2>
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class="font-weight-light text-muted">ユーザーのタスク</th>
+    </tr>
+  </thead>
+
+  <tr>
+    <th scope="col">タスク名</th>
+    <th scope="col"><%= link_to '優先度', sort_priolity: true %></th>
+    <th scope="col">状態</th>
+    <th scope="col"><%= link_to '終了期限', sort_expired_at: true %></th>
+    <th scope="col">作成者</th>
+    <th scope="col"><%= link_to '作成日', sort_created: true %></th>
+  </tr>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr class="task_row" scope="row">
+        <td><%= task.name.truncate(14) %></td>
+        <td class="now_priolity"><%= task.priolity %></td>
+        <td class="now_status"><%= task.status %></td>
+        <td class="date">《<%= task.expired_at.strftime("%y年%m月%d日") %> 〆》</td> 
+        <td><%= task.user.name.truncate(8) %></td> 
+        <td class="date">created at <%= task.created_at.strftime("%y-%m-%d") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', admin_users_path %>
