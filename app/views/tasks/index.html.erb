@@ -1,4 +1,4 @@
-<h1>Your Tasks</h1>
+<h1>Tasks</h1>
   <%= form_with url: tasks_path(search:"true"), method: :get, scope: :search, local: true do |f| %>
     <%= f.select :status, Task.statuses.keys, include_blank: "" %>
     <%= f.text_field :name, placeholder: "タスク名で検索する" %>
