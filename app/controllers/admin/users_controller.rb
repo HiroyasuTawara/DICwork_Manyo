@@ -44,7 +44,7 @@ class Admin::UsersController < ApplicationController
     else
       redirect_to users_url, notice: "管理者アカウントは削除できません." 
     end
-    redirect_to admin_users_path, notice: "アカウントを削除しました。" 
+    redirect_to admin_users_path, notice: "アカウントを削除しました/admin" 
   end
 
   private

@@ -1,7 +1,14 @@
 require 'rails_helper'
-RSpec.describe 'タスク管理機能', type: :system do
 
+RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
+    let!(:normal_user) { FactoryBot.create(:normal_user) }
+    before do
+      visit new_session_path
+      fill_in 'メールアドレス', with: 'normal@sample.com'
+      fill_in 'パスワード', with: '123456'
+      click_button 'commit'
+    end
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
@@ -16,7 +23,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
 
   describe '一覧表示機能' do
+    let!(:normal_user) { FactoryBot.create(:normal_user) }
     before do
+      visit new_session_path
+      fill_in 'メールアドレス', with: 'normal@sample.com'
+      fill_in 'パスワード', with: '123456'
+      click_button 'commit'
       FactoryBot.create(:task) 
       FactoryBot.create(:second_task)
       FactoryBot.create(:third_task)
@@ -38,10 +50,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0].text).to have_content 'name_4_donkey'
       end
     end
-    end
   end
 
+
   describe 'ソート機能' do
+    let!(:normal_user) { FactoryBot.create(:normal_user) }
+    before do
+      visit new_session_path
+      fill_in 'メールアドレス', with: 'normal@sample.com'
+      fill_in 'パスワード', with: '123456'
+      click_button 'commit'
+    end
     let!(:task) { FactoryBot.create(:task) }
     let!(:second_task) { FactoryBot.create(:second_task) }
     let!(:third_task) { FactoryBot.create(:third_task) }
@@ -66,56 +85,68 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-      context '任意のタスク詳細画面に遷移した場合' do
-        it '該当タスクの内容が表示される' do
-          task = FactoryBot.create(:task, note: 'note')
-          visit task_path(task.id)
-          expect(page).to have_content 'note'
-        end
+    let!(:normal_user) { FactoryBot.create(:normal_user) }
+    before do
+      visit new_session_path
+      fill_in 'メールアドレス', with: 'normal@sample.com'
+      fill_in 'パスワード', with: '123456'
+      click_button 'commit'
+    end
+    context '任意のタスク詳細画面に遷移した場合' do
+      it '該当タスクの内容が表示される' do
+        task = FactoryBot.create(:task, note: 'note')
+        visit task_path(task.id)
+        expect(page).to have_content 'note'
       end
     end
+  end
   
-    describe '検索機能' do
-      before do
-        FactoryBot.create(:task) 
-        FactoryBot.create(:second_task)
-        FactoryBot.create(:third_task)
+  describe '検索機能' do
+    let!(:normal_user) { FactoryBot.create(:normal_user) }
+    before do
+      visit new_session_path
+      fill_in 'メールアドレス', with: 'normal@sample.com'
+      fill_in 'パスワード', with: '123456'
+      click_button 'commit'
+      FactoryBot.create(:task) 
+      FactoryBot.create(:second_task)
+      FactoryBot.create(:third_task)
+      visit tasks_path
+    end
+  
+    context 'タイトルであいまい検索をした場合' do
+      it "検索ワードを含むタスクのみ表示される" do
+        # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
         visit tasks_path
+        fill_in 'search[name]', with: 'chiken'
+        click_button '検索'
+        expect(page).to have_content 'name_chiken'
+        expect(page).not_to have_content 'name_2_cat'
+        expect(page).not_to have_content 'name_3_dog'
       end
-  
-      context 'タイトルであいまい検索をした場合' do
-        it "検索ワードを含むタスクのみ表示される" do
-          # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
-          visit tasks_path
-          fill_in 'search[name]', with: 'chiken'
-          click_button '検索'
-          expect(page).to have_content 'name_chiken'
-          expect(page).not_to have_content 'name_2_cat'
-          expect(page).not_to have_content 'name_3_dog'
-        end
+    end
+    context 'ステータスで検索した場合' do
+      it "検索したステータスに一致するタスクのみ表示される" do
+        # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
+        visit tasks_path
+        select '未着手', from: 'search[status]'
+        click_button '検索'
+        expect(page).not_to have_content 'name_chiken'
+        expect(page).to have_content 'name_2_cat'
+        expect(page).to have_content 'name_3_dog'
       end
-      context 'ステータスで検索した場合' do
-        it "検索したステータスに一致するタスクのみ表示される" do
-          # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
-          visit tasks_path
-          select '未着手', from: 'search[status]'
-          click_button '検索'
-          expect(page).not_to have_content 'name_chiken'
-          expect(page).to have_content 'name_2_cat'
-          expect(page).to have_content 'name_3_dog'
-        end
+    end
+    context 'タイトルとステータスで検索した場合' do
+      it "検索ワードをタイトルに含み、かつステータスに一致するタスクのみ表示される" do
+        # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
+        visit tasks_path
+        fill_in 'search[name]', with: 'name'
+        select '着手', from: 'search[status]'
+        click_button '検索'
+        expect(page).to have_content 'ame_chiken'
+        expect(page).not_to have_content 'name_2_cat'
+        expect(page).not_to have_content 'name_3_dog'
       end
-      context 'タイトルとステータスで検索した場合' do
-        it "検索ワードをタイトルに含み、かつステータスに一致するタスクのみ表示される" do
-          # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
-          visit tasks_path
-          fill_in 'search[name]', with: 'name'
-          select '着手', from: 'search[status]'
-          click_button '検索'
-          expect(page).to have_content 'ame_chiken'
-          expect(page).not_to have_content 'name_2_cat'
-          expect(page).not_to have_content 'name_3_dog'
-        end
-      end
-    
+    end
+  end
 end
