@@ -59,6 +59,5 @@ gem 'net-imap'
 gem 'net-pop'
 
 gem 'bootstrap', '~> 4.4.1'
-gem 'bcrypt'
 
-gem 'irb', '>= 1.3.6'
+

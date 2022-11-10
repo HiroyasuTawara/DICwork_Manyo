@@ -1,7 +1,6 @@
 class Task < ApplicationRecord
   enum priolity: { 低: 0, 中: 1, 高: 2, 最優先: 3 }
   enum status: { 未着手: 0, 着手: 1, 完了: 2 }
-  belongs_to :user
   validates :name,  presence: true, length: { maximum: 32}
   validates :note, presence: true, length: { maximum: 1024}
   validates :expired_at, presence: true
