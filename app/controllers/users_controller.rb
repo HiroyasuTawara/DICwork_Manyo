@@ -1,16 +1,19 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only:[:new, :create]
 
-  def index
-    @users = User.all
-  end
 
   def show
     @user = User.find(params[:id])
+    if @user != current_user
+      redirect_to root_path
+    end
   end
 
   def new
     @user = User.new
+    if logged_in?
+      redirect_to root_path
+    end
   end
 
   def edit
@@ -39,7 +42,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to users_url, notice: "User was successfully destroyed." 
+    redirect_to root_path, notice: "アカウントを削除しました。" 
   end
 
   private
