@@ -19,3 +19,4 @@ require("jquery")
 
 import 'bootstrap';
 import '../stylesheets/application';
+import "packs/application.css";

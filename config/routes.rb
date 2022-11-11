@@ -10,4 +10,6 @@ Rails.application.routes.draw do
       get "search"
     end
   end
+  get '*not_found' => 'application#routing_error'
+  post '*not_found' => 'application#routing_error'
 end

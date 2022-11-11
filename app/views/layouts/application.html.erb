@@ -11,19 +11,22 @@
   </head>
 
   <body>
+  <div class="text-light">
     <% if logged_in? %>
       <p><%= current_user.name %> でログイン中</p>
-      <span><%= link_to 'マイページ' ,user_path(current_user.id), class:"btn-primary" %></span>
-      <%= link_to 'ログアウト' ,session_path(current_user.id), method: :delete, class:"btn-primary", id:"logout" %>
+      <span><%= link_to 'マイページ' ,user_path(current_user.id), class:"btn btn-outline-light" %></span>
+      <%= link_to 'ログアウト' ,session_path(current_user.id), method: :delete, class:"btn btn-outline-light", id:"logout" %>
       <% if current_user.admin? && !(current_user == @user) %> 
-        <%= link_to "ユーザー一覧", admin_users_path, id:"users-index" %>
+        <%= link_to "ユーザー一覧", admin_users_path, id:"users-index",class:"btn btn-outline-light" %>
       <% end %>
     <% else %>
       <%= link_to '新規ユーザー作成', new_user_path, class:"btn-primary", id:"new-user" %>
       <%= link_to 'ログイン', new_session_path, class:"btn-primary" %>
     <% end %>
-
     <p id="notice"><%= notice %></p>
+  </div>
+  <div class="container bg-light rounded p-3">
     <%= yield %>
+  </div>
   </body>
 </html>
