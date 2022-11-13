@@ -1,11 +1,15 @@
 <h1>Your Tasks</h1>
   <%= form_with url: tasks_path(search:"true"), method: :get, scope: :search, local: true do |f| %>
+  <div class="form-inline">
     <%= f.select :status, Task.statuses.keys, include_blank: "" %>
+    <%= f.select :label_id, Label.pluck(:name, :id), include_blank: "", id: "search_label" %>
     <%= f.text_field :name, placeholder: "タスク名で検索する" %>
+  </div>
+  <div>
     <%= f.submit '検索', id: 'search_task' %>
-    <%= link_to '+New Task', new_task_path, class:'btn btn-primary' %>
+  </div>  
   <% end %>
-
+  <%= link_to '+New Task', new_task_path, class:'btn btn-primary' %>
 
 
 <table class="table">

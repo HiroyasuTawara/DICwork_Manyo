@@ -14,7 +14,7 @@ class TasksController < ApplicationController
       @tasks = @tasks
         .search_status(params[:search][:status])
         .search_name(params[:search][:name])
-        #.search_label(params[:search][:label_id])
+        .search_label(params[:search][:label_id])
     end
 
     @tasks = @tasks.page(params[:page]).sort_created_at
