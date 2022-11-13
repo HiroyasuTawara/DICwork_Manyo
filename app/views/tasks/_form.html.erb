@@ -1,16 +1,15 @@
-<%= form_with model: @task, local:true do |form| %>
-  <% if task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+<% if task.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    <ul>
+      <% task.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
-      <ul>
-        <% task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  
+<%= form_with model: @task, local:true do |form| %>
   <div class="field">
     <%= form.label :name, "タスク名" %>
     <%= form.text_field :name , required:true %>
@@ -32,11 +31,21 @@
   </div>
 
   <div class="field">
+    <%= form.label 'ラベル', class:"form-check-inline"%>
+    <% @labels.each do |label| %>
+      <span class="label-<%= label.color %>">
+        <%= form.check_box :label_ids, { multiple: true, include_hidden: false }, label[:id], class:"form-check-input" %>
+        <label class="form-check-label"><%= label.name %></label>
+      </span>      
+    <% end %>
+  </div>
+
+  <div class="field">
     <%= form.label :expired_at, "終了期限" %>
     <%= form.date_select :expired_at %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>

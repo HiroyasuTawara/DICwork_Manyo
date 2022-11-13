@@ -1,0 +1,12 @@
+
+span[class^="label-"] {
+  color:whitesmoke;
+  margin-right: 8px;
+  padding: 0 4px;
+  &[class$= "orangered"]{background-color: orangered;};
+  &[class$= "mediumseagreen"]{background-color: mediumseagreen;};
+  &[class$= "royalblue"]{background-color: royalblue;};
+  &[class$= "darkorange"]{background-color: darkorange;};
+  &[class$= "lightslategray"]{background-color: lightslategray;};
+  &[class$= "hotpink"]{background-color: hotpink;};
+} 
