@@ -33,9 +33,9 @@ RSpec.describe 'タスクモデル機能', type: :model do
   end
 
   describe '検索機能' do
-    let!(:task) { FactoryBot.create(:task) }
-    let!(:second_task) { FactoryBot.create(:second_task) }
-    let!(:third_task) { FactoryBot.create(:third_task) }
+    let!(:task) { FactoryBot.create(:task, user_id: @current_user.id)}
+    let!(:second_task) { FactoryBot.create(:second_task, user_id: @current_user.id) }
+    let!(:third_task) { FactoryBot.create(:third_task, user_id: @current_user.id) }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it '検索ワードを含むタスクが絞り込まれる' do
         # タイトルの検索メソッドをsearch_nameとしてscopeで定義

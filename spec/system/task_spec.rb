@@ -29,9 +29,9 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'メールアドレス', with: 'normal@sample.com'
       fill_in 'パスワード', with: '123456'
       click_button 'commit'
-      FactoryBot.create(:task) 
-      FactoryBot.create(:second_task)
-      FactoryBot.create(:third_task)
+      FactoryBot.create(:task, user:normal_user) 
+      FactoryBot.create(:second_task, user:normal_user)
+      FactoryBot.create(:third_task, user:normal_user)
       visit tasks_path
     end
     context '一覧画面に遷移した場合' do
@@ -44,7 +44,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '新規タスクを作成した場合' do
       it '新しいタスクが最初に表示される' do
-        FactoryBot.create(:fourth_task)
+        FactoryBot.create(:fourth_task, user:normal_user)
         visit tasks_path
         task_list = all('.task_row')
         expect(task_list[0].text).to have_content 'name_4_donkey'
@@ -61,9 +61,9 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'パスワード', with: '123456'
       click_button 'commit'
     end
-    let!(:task) { FactoryBot.create(:task) }
-    let!(:second_task) { FactoryBot.create(:second_task) }
-    let!(:third_task) { FactoryBot.create(:third_task) }
+    let!(:task) { FactoryBot.create(:task, user:normal_user) }
+    let!(:second_task) { FactoryBot.create(:second_task, user:normal_user) }
+    let!(:third_task) { FactoryBot.create(:third_task, user:normal_user) }
     context '「終了期限」リンクをクリックした場合' do
       it '終了期限昇順でタスク一覧が表示される' do
         visit tasks_path
@@ -94,7 +94,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        task = FactoryBot.create(:task, note: 'note')
+        task = FactoryBot.create(:task, note: 'note', user:normal_user)
         visit task_path(task.id)
         expect(page).to have_content 'note'
       end
@@ -109,8 +109,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'パスワード', with: '123456'
       click_button 'commit'
       FactoryBot.create(:task, user: normal_user) 
-      FactoryBot.create(:second_task)
-      FactoryBot.create(:third_task)
+      FactoryBot.create(:second_task, user:normal_user)
+      FactoryBot.create(:third_task, user:normal_user)
       visit tasks_path
     end
   
