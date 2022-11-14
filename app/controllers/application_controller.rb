@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   
   #エラーページ用(本番環境)
-  if Rails.env.development?
+  unless Rails.env.development?
     rescue_from Exception,                      with: :_render_500
     rescue_from ActiveRecord::RecordNotFound,   with: :_render_404
     rescue_from ActionController::RoutingError, with: :_render_404
