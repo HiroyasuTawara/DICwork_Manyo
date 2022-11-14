@@ -1,6 +1,6 @@
-FactoryBot.define do
-  factory :label_task do
-    task { nil }
-    label { nil }
-  end
-end
+# FactoryBot.define do
+#   factory :label_task do
+#     task { Task.first }
+#     label { Lavel.first }
+#   end
+# end

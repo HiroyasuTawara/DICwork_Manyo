@@ -108,7 +108,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'メールアドレス', with: 'normal@sample.com'
       fill_in 'パスワード', with: '123456'
       click_button 'commit'
-      FactoryBot.create(:task) 
+      FactoryBot.create(:task, user: normal_user) 
       FactoryBot.create(:second_task)
       FactoryBot.create(:third_task)
       visit tasks_path
