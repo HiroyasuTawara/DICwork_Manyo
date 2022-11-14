@@ -10,3 +10,7 @@ span[class^="label-"] {
   &[class$= "lightslategray"]{background-color: lightslategray;};
   &[class$= "hotpink"]{background-color: hotpink;};
 } 
+
+.search_form{
+  margin-right: 10px;
+}
