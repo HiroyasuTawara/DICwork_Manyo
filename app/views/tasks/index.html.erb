@@ -6,7 +6,7 @@
         <%= f.select :status, Task.statuses.keys, include_blank: "" %>
 
         <%= f.label "ラベル" %>
-        <%= f.select :label_id, Label.pluck(:name, :id), include_blank: "", id: "search_label" %>
+        <%= f.select  :label_id, @surch_labels.pluck(:name, :id), include_blank: "", id: "search_label" %>
 
         <%= f.text_field :name, placeholder: "タスク名で検索する" %>
 
