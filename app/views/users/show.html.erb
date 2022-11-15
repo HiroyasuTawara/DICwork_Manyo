@@ -8,5 +8,9 @@
   <%= @user.email %>
 </p>
 
-<%= link_to '登録内容を編集する', edit_user_path(@user) %>
-<%= link_to 'Back', tasks_path %>
+<p>
+  <%= link_to 'ラベルを管理する', labels_path(@user) %>
+</p>
+
+<%= link_to '登録内容を編集する', edit_user_path(@user) %> /
+<%= link_to ' topに戻る', tasks_path %>

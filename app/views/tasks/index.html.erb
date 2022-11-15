@@ -1,11 +1,24 @@
 <h1>Your Tasks</h1>
   <%= form_with url: tasks_path(search:"true"), method: :get, scope: :search, local: true do |f| %>
-    <%= f.select :status, Task.statuses.keys, include_blank: "" %>
-    <%= f.text_field :name, placeholder: "タスク名で検索する" %>
-    <%= f.submit '検索', id: 'search_task' %>
+    <div class="form-inline">
+
+        <%= f.label "ステータス" %>
+        <%= f.select :status, Task.statuses.keys, include_blank: "" %>
+
+        <%= f.label "ラベル" %>
+        <%= f.select  :label_id, @surch_labels.pluck(:name, :id), include_blank: "", id: "search_label" %>
+
+        <%= f.text_field :name, placeholder: "タスク名で検索する" %>
+
+    </div>
+    <div>
+      <%= f.submit '検索', id: 'search_task' %>
+    </div>  
   <% end %>
 
-
+<div>
+  <%= link_to '+New Task', new_task_path, class:'btn btn-primary' %>
+</div>
 
 <table class="table">
   <thead>
@@ -16,9 +29,9 @@
 
   <tr>
     <th scope="col">タスク名</th>
+    <th>ラベル</th>
     <th scope="col"><%= link_to '優先度', sort_priolity: true %></th>
     <th scope="col">状態</th>
-    <th scope="col">ステータス変更</th>
     <th scope="col"><%= link_to '終了期限', sort_expired_at: true %></th>
     <th scope="col">作成者</th>
     <th colspan='3' scope="col"></th>
@@ -28,17 +41,13 @@
     <% @tasks.each do |task| %>
       <tr class="task_row" scope="row">
         <td><%= task.name.truncate(14) %></td>
-        <td class="now_priolity"><%= task.priolity %></td>
-        <td class="now_status"><%= task.status %></td>
         <td>
-          <%= form_with(model: task, class: 'js-form', local: true) do |f| %>
-            ...
-            <%= f.select :priolity, { 低: '低', 中: '中', 高: '高', 最優先: '最優先'} %>
-            <%= f.select :status, { 未着手: '未着手', 着手: '着手', 完了: '完了'}%>
-            <%= f.submit "変更" %>
+          <% task.labels.each do |label| %>
+            <span class="label-<%= label.color %>"> </span>
           <% end %>
         </td>
-
+        <td class="now_priolity"><%= task.priolity %></td>
+        <td class="now_status"><%= task.status %></td>
         <td class="date">《<%= task.expired_at.strftime("%y年%m月%d日") %> 〆》</td>
         <td><%= task.user.name.truncate(8) %></td> 
         <td><%= link_to 'Show', task %></td>
@@ -53,4 +62,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path %>
+

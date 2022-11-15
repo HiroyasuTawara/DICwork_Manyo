@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   before_action :ensure_user, only: %i[ edit update destroy ]
   def index
     @tasks = @current_user.tasks
+    @surch_labels = @current_user.labels
     if params[:sort_expired_at]
       @tasks = @tasks.sort_expired_at
     elsif params[:sort_priolity]
@@ -14,7 +15,7 @@ class TasksController < ApplicationController
       @tasks = @tasks
         .search_status(params[:search][:status])
         .search_name(params[:search][:name])
-        #.search_label(params[:search][:label_id])
+        .search_label(params[:search][:label_id])
     end
 
     @tasks = @tasks.page(params[:page]).sort_created_at
@@ -27,10 +28,12 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = current_user.labels
   end
 
   def edit
     @task = Task.find(params[:id])
+    @labels = current_user.labels
   end
 
 
@@ -44,12 +47,12 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
+
   def update
     @task = Task.find(params[:id])
     respond_to do |format|
       if @task.update(task_params)
-        format.html {redirect_to tasks_path, notice: "タスクを更新しました。"}
+        format.html {redirect_to task_url(@task), notice: "タスクを更新しました。"}
         format.js
       else
         format.html {render :edit, status: :unprocessable_entity}
@@ -58,7 +61,7 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1 or /tasks/1.json
+
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
@@ -73,7 +76,8 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :priolity, :status, :note, :expired_at)
+    params.require(:task).permit(
+      :name, :priolity, :status, :note, :expired_at, label_ids: [])
   end
   
 end
