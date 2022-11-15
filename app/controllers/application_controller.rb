@@ -5,11 +5,11 @@ class ApplicationController < ActionController::Base
 
   
   #エラーページ用(本番環境)
-  unless Rails.env.development?
-    rescue_from Exception,                      with: :_render_500
-    rescue_from ActiveRecord::RecordNotFound,   with: :_render_404
-    rescue_from ActionController::RoutingError, with: :_render_404
-  end
+  protect_from_forgery with: :Exception
+  rescue_from Exception,                      with: :_render_500
+  rescue_from ActiveRecord::RecordNotFound,   with: :_render_404
+  rescue_from ActionController::RoutingError, with: :_render_404
+  
 
   def routing_error
     raise ActionController::RoutingError, params[:path]
@@ -40,5 +40,5 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path, notice: "ログインを行なってください。"
     end
   end
-    
+
 end
